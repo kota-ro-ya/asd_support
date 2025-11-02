@@ -1,0 +1,73 @@
+{
+  "event_name": "病院",
+  "description": "病院での行動を学ぶイベント",
+  "thumbnail": "assets/images/events/hospital/thumbnail.png",
+  "scenes": [
+    {
+      "scene_number": 0,
+      "text": "病院の待合室で待っているよ。どうする？",
+      "image": "assets/images/events/hospital/scene_01.png",
+      "choices": [
+        {
+          "text": "静かに座って待つ",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "待合室で静かに待つのは素晴らしいマナーです。"
+        },
+        {
+          "text": "本を読んで待つ",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "本を読んで待つのは良い方法です。静かに過ごせていますね。"
+        },
+        {
+          "text": "走り回る",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "待合室で走るのは危ないです。静かに待ちましょう。"
+        }
+      ]
+    },
+    {
+      "scene_number": 1,
+      "text": "注射をすることになったよ。どうする？",
+      "image": "assets/images/events/hospital/scene_02.png",
+      "choices": [
+        {
+          "text": "「こわいけど頑張ります」と言う",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "正直な気持ちを伝えられましたね。勇気を出して頑張りました。"
+        },
+        {
+          "text": "じっと我慢する",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "我慢できるのは偉いです。気持ちを伝えられるともっと良いですよ。"
+        },
+        {
+          "text": "泣き叫ぶ",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "こわい気持ちはわかりますが、落ち着いて気持ちを伝えましょう。"
+        }
+      ]
+    },
+    {
+      "scene_number": 2,
+      "text": "診察が終わったよ。どうする？",
+      "image": "assets/images/events/hospital/scene_03.png",
+      "choices": [
+        {
+          "text": "「ありがとうございました」とお礼を言う",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "お礼を言えるのは素晴らしいです。お医者さんも嬉しいですね。"
+        },
+        {
+          "text": "何も言わずに帰る",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "帰れますが、お礼を言えるともっと良いですよ。"
+        },
+        {
+          "text": "診察室で遊び始める",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "診察が終わったら次の人が待っています。すぐに帰りましょう。"
+        }
+      ]
+    }
+  ]
+}

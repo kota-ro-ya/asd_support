@@ -1,0 +1,77 @@
+{
+  "床屋_0": {
+    "content": {
+      "situation_text": "床屋さんに着きました。さあ、どうしようかな？",
+      "choices": [
+        {
+          "text": "床屋さんに「こんにちは！」と言おう。",
+          "evaluation": "appropriate",
+          "hint": "挨拶をすると、お店の人が嬉しくなります。"
+        },
+        {
+          "text": "何も言わずに座る。",
+          "evaluation": "acceptable",
+          "hint": "挨拶しなくても大丈夫だけど、次は言ってみよう。"
+        },
+        {
+          "text": "床屋さんに背を向けて立ち尽くす。",
+          "evaluation": "inappropriate",
+          "hint": "お店の人に気づいてもらえないかもしれません。"
+        }
+      ],
+      "image": "assets/images/events/barber/scene_01.png"
+    },
+    "timestamp": "2025-11-02T06:54:02.754107",
+    "expiry": "2025-11-03T06:54:02.754118"
+  },
+  "床屋_1": {
+    "content": {
+      "situation_text": "床屋でハサミの音が聞こえるよ。ちょっとドキドキするね。どうしたらいいかな？",
+      "choices": [
+        {
+          "text": "「ハサミの音がこわい」と言ってみる",
+          "evaluation": "appropriate",
+          "hint": "自分の気持ちを伝えるのは大事だよ。床屋の人は優しくしてくれるよ。"
+        },
+        {
+          "text": "ちょっとだけ我慢してみる",
+          "evaluation": "acceptable",
+          "hint": "我慢するのもいいけど、気持ちを言うことも大切だよ。"
+        },
+        {
+          "text": "静かにそのまま何もしない",
+          "evaluation": "inappropriate",
+          "hint": "何も言わないと、床屋の人がわからないかもしれないよ。"
+        }
+      ],
+      "image": "assets/images/events/barber/scene_02.png"
+    },
+    "timestamp": "2025-11-02T06:54:13.848164",
+    "expiry": "2025-11-03T06:54:13.848176"
+  },
+  "床屋_2": {
+    "content": {
+      "situation_text": "髪を切ってもらった後、どう感じるかな？",
+      "choices": [
+        {
+          "text": "ありがとう！髪が素敵になったよ。",
+          "evaluation": "appropriate",
+          "hint": "お礼を言うことで、相手も嬉しくなりますね。"
+        },
+        {
+          "text": "髪を切ってくれてよかった。",
+          "evaluation": "acceptable",
+          "hint": "感謝の気持ちを伝えていますが、もう少し具体的だと良いですね。"
+        },
+        {
+          "text": "なんで髪を切るの？",
+          "evaluation": "inappropriate",
+          "hint": "これは相手への感謝ではなく、疑問を投げかけています。"
+        }
+      ],
+      "image": "assets/images/events/barber/scene_03.png"
+    },
+    "timestamp": "2025-11-02T06:53:29.905875",
+    "expiry": "2025-11-03T06:53:29.905892"
+  }
+}

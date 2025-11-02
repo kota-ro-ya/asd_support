@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env_a/
+venv/
+env/
+ENV/
+
+# 環境変数
+.env
+
+# ユーザーデータ
+data/user_progress/*.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+
+# テスト
+.pytest_cache/
+htmlcov/
+.coverage
+
+
+# 機密情報（追加の安全対策）
+*.key
+*.pem
+*.cer
+secrets/
+credentials/
+
+# OpenAI API関連
+openai_key.txt
+api_key.txt
+
+# データベース
+*.db
+*.sqlite
+*.sqlite3
+
+# ログファイル
+*.log
+logs/
+
+# 一時ファイル
+tmp/
+temp/
+*.tmp
+
+# バックアップ
+*_backup/
+*.bak
+
+# 開発用データ
+dev_data/

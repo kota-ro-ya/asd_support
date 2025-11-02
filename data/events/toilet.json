@@ -1,0 +1,73 @@
+{
+  "event_name": "トイレ",
+  "description": "トイレでの行動を学ぶイベント",
+  "thumbnail": "assets/images/events/toilet/thumbnail.png",
+  "scenes": [
+    {
+      "scene_number": 0,
+      "text": "トイレに行きたくなったよ。どうする？",
+      "image": "assets/images/events/toilet/scene_01.png",
+      "choices": [
+        {
+          "text": "「トイレに行きたい」と伝える",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "自分の気持ちを伝えるのはとても良いことです。我慢しないで言えましたね。"
+        },
+        {
+          "text": "我慢する",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "我慢するのは体に良くないです。トイレに行きたいときは伝えましょう。"
+        },
+        {
+          "text": "黙ってトイレに行く",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "トイレに行くのは良いですが、一言伝えられるともっと良いですね。"
+        }
+      ]
+    },
+    {
+      "scene_number": 1,
+      "text": "トイレのドアが閉まっているよ。どうする？",
+      "image": "assets/images/events/toilet/scene_02.png",
+      "choices": [
+        {
+          "text": "ノックして「使っていますか？」と聞く",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "ノックするのはとても良いマナーです。中の人も安心できます。"
+        },
+        {
+          "text": "待つ",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "待つのも良いですが、確認するともっと良いですよ。"
+        },
+        {
+          "text": "ドアを開ける",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "いきなり開けてはいけません。中に人がいるかもしれません。"
+        }
+      ]
+    },
+    {
+      "scene_number": 2,
+      "text": "トイレが終わったよ。どうする？",
+      "image": "assets/images/events/toilet/scene_03.png",
+      "choices": [
+        {
+          "text": "手を洗う",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "手を洗うのはとても大切です。清潔にできましたね。"
+        },
+        {
+          "text": "手を洗わない",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "手を洗わないとバイ菌がついたままです。必ず洗いましょう。"
+        },
+        {
+          "text": "水で軽く流すだけ",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "水だけでも良いですが、石鹸を使うともっと良いですよ。"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "event_name": "身支度",
+  "description": "朝の身支度を学ぶイベント",
+  "thumbnail": "assets/images/events/morning/thumbnail.png",
+  "scenes": [
+    {
+      "scene_number": 0,
+      "text": "朝起きたよ。どうする？",
+      "image": "assets/images/events/morning/scene_01.png",
+      "choices": [
+        {
+          "text": "「おはよう」と言う",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "朝の挨拶ができましたね。気持ちの良いスタートです。"
+        },
+        {
+          "text": "何も言わずに起きる",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "起きられましたが、挨拶するともっと良いですよ。"
+        },
+        {
+          "text": "もう一度寝る",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "もう起きる時間です。頑張って起きましょう。"
+        }
+      ]
+    },
+    {
+      "scene_number": 1,
+      "text": "顔を洗うよ。どうする？",
+      "image": "assets/images/events/morning/scene_02.png",
+      "choices": [
+        {
+          "text": "石鹸を使って丁寧に洗う",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "しっかり顔を洗えましたね。さっぱりしたでしょう。"
+        },
+        {
+          "text": "水だけで洗う",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "水だけでも良いですが、石鹸を使うともっと良いですよ。"
+        },
+        {
+          "text": "洗わない",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "顔を洗わないと清潔じゃないです。必ず洗いましょう。"
+        }
+      ]
+    },
+    {
+      "scene_number": 2,
+      "text": "服を着替えるよ。どうする？",
+      "image": "assets/images/events/morning/scene_03.png",
+      "choices": [
+        {
+          "text": "自分で服を選んで着る",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "自分で着替えられましたね。素晴らしいです。"
+        },
+        {
+          "text": "手伝ってもらいながら着る",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "手伝ってもらうのも良いですが、少しずつ自分でできるようになりましょう。"
+        },
+        {
+          "text": "着替えない",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "パジャマのままでは出かけられません。着替えましょう。"
+        }
+      ]
+    }
+  ]
+}

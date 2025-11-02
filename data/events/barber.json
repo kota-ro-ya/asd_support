@@ -1,0 +1,73 @@
+{
+  "event_name": "床屋",
+  "description": "床屋さんでの行動を学ぶイベント",
+  "thumbnail": "assets/images/events/barber/thumbnail.png",
+  "scenes": [
+    {
+      "scene_number": 0,
+      "text": "床屋さんについたよ。どうする？",
+      "image": "assets/images/events/barber/scene_01.png",
+      "choices": [
+        {
+          "text": "「こんにちは」と言う",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "挨拶はとても良い行動です。お店の人も嬉しい気持ちになります。"
+        },
+        {
+          "text": "だまって座る",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "静かに待つのも悪くないですが、挨拶するともっと良いです。"
+        },
+        {
+          "text": "帰る",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "せっかく来たのに帰ってしまうのは残念です。髪を切るのが目的でしたね。"
+        }
+      ]
+    },
+    {
+      "scene_number": 1,
+      "text": "ハサミの音がちょっとこわいね。どうする？",
+      "image": "assets/images/events/barber/scene_02.png",
+      "choices": [
+        {
+          "text": "「ハサミの音がこわいです」とお店の人に伝える",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "自分の気持ちを伝えるのはとても良いことです。お店の人も優しく対応してくれます。"
+        },
+        {
+          "text": "耳をおさえる",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "耳をおさえるのも一つの方法です。でも、言葉で伝えられるともっと良いですね。"
+        },
+        {
+          "text": "大声を出す",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "大声を出すと周りの人がびっくりします。気持ちは分かるけど、言葉で伝えましょう。"
+        }
+      ]
+    },
+    {
+      "scene_number": 2,
+      "text": "髪を切り終わったよ。どうする？",
+      "image": "assets/images/events/barber/scene_03.png",
+      "choices": [
+        {
+          "text": "「ありがとうございました」と言う",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "お礼を言うのは素晴らしいです。感謝の気持ちを伝えられましたね。"
+        },
+        {
+          "text": "何も言わずに帰る",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "帰ることはできますが、お礼を言えるともっと良いですよ。"
+        },
+        {
+          "text": "「もっと切って」と言う",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "もう切り終わっています。次回、最初に希望を伝えましょうね。"
+        }
+      ]
+    }
+  ]
+}

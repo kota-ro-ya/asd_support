@@ -1,0 +1,73 @@
+{
+  "event_name": "公園",
+  "description": "公園での行動を学ぶイベント",
+  "thumbnail": "assets/images/events/park/thumbnail.png",
+  "scenes": [
+    {
+      "scene_number": 0,
+      "text": "公園でブランコに乗りたいけど、誰か使っているよ。どうする？",
+      "image": "assets/images/events/park/scene_01.png",
+      "choices": [
+        {
+          "text": "「終わったら貸してください」と言って待つ",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "順番を待つのは素晴らしいマナーです。言葉で伝えられましたね。"
+        },
+        {
+          "text": "他の遊具で遊ぶ",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "他の遊具で遊ぶのも良い選択です。でも、待つこともできますよ。"
+        },
+        {
+          "text": "無理やり奪う",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "奪うのは良くないです。順番を守りましょう。"
+        }
+      ]
+    },
+    {
+      "scene_number": 1,
+      "text": "ボールが転がってきたよ。どうする？",
+      "image": "assets/images/events/park/scene_02.png",
+      "choices": [
+        {
+          "text": "拾って持ち主に渡す",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "親切に渡せましたね。きっと喜ばれますよ。"
+        },
+        {
+          "text": "そのままにしておく",
+          "evaluation": "acceptable",
+          "ai_feedback_hint": "そのままでも良いですが、渡してあげるともっと良いですね。"
+        },
+        {
+          "text": "自分のものにする",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "他の人のものは持っていってはいけません。"
+        }
+      ]
+    },
+    {
+      "scene_number": 2,
+      "text": "お友達が「一緒に遊ぼう」と言ってきたよ。どうする？",
+      "image": "assets/images/events/park/scene_03.png",
+      "choices": [
+        {
+          "text": "「いいよ」と言って一緒に遊ぶ",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "一緒に遊べるのは素晴らしいです。楽しく過ごせそうですね。"
+        },
+        {
+          "text": "「今は一人で遊びたい」と伝える",
+          "evaluation": "appropriate",
+          "ai_feedback_hint": "自分の気持ちを正直に伝えられましたね。それも良い選択です。"
+        },
+        {
+          "text": "無視する",
+          "evaluation": "inappropriate",
+          "ai_feedback_hint": "無視するのは良くないです。何か言葉で返事をしましょう。"
+        }
+      ]
+    }
+  ]
+}
