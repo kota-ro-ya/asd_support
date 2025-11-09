@@ -10,18 +10,15 @@
       "choices": [
         {
           "text": "静かに座って待つ",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "待合室で静かに待つのは素晴らしいマナーです。"
+          "evaluation": "appropriate"
         },
         {
           "text": "本を読んで待つ",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "本を読んで待つのは良い方法です。静かに過ごせていますね。"
+          "evaluation": "appropriate"
         },
         {
           "text": "走り回る",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "待合室で走るのは危ないです。静かに待ちましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -32,18 +29,15 @@
       "choices": [
         {
           "text": "「こわいけど頑張ります」と言う",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "正直な気持ちを伝えられましたね。勇気を出して頑張りました。"
+          "evaluation": "appropriate"
         },
         {
           "text": "じっと我慢する",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "我慢できるのは偉いです。気持ちを伝えられるともっと良いですよ。"
+          "evaluation": "acceptable"
         },
         {
           "text": "泣き叫ぶ",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "こわい気持ちはわかりますが、落ち着いて気持ちを伝えましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -54,18 +48,15 @@
       "choices": [
         {
           "text": "「ありがとうございました」とお礼を言う",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "お礼を言えるのは素晴らしいです。お医者さんも嬉しいですね。"
+          "evaluation": "appropriate"
         },
         {
           "text": "何も言わずに帰る",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "帰れますが、お礼を言えるともっと良いですよ。"
+          "evaluation": "acceptable"
         },
         {
           "text": "診察室で遊び始める",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "診察が終わったら次の人が待っています。すぐに帰りましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     }

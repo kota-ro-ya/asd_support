@@ -4,11 +4,13 @@ Agent Coordinator for managing multiple AI agents.
 """
 
 import logging
+import time
 from typing import Dict, Optional, List, Any
 from enum import Enum
 
 from app.services.ai_service import AIService
 from app.config.settings import Settings
+from app.utils.debug_info import get_debug_collector
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +31,7 @@ class AgentCoordinator:
     def __init__(self):
         """AgentCoordinatorの初期化"""
         self.ai_service = AIService()
+        self.debug_collector = get_debug_collector()
         logger.info("AgentCoordinator initialized")
     
     def generate_scenario_variation(
@@ -224,6 +227,9 @@ JSON形式で以下の構造で返してください：
 }}
 """
             
+            # API呼び出しの計測開始
+            start_time = time.time()
+            
             response = self.ai_service.client.chat.completions.create(
                 model=self.ai_service.model,
                 messages=[
@@ -233,6 +239,19 @@ JSON形式で以下の構造で返してください：
                 max_tokens=Settings.MAX_TOKENS,
                 temperature=0.3,  # 厳格な評価のため低めに設定
                 response_format={"type": "json_object"}
+            )
+            
+            # デバッグ情報を記録
+            response_time = time.time() - start_time
+            self.debug_collector.add_api_call(
+                model=self.ai_service.model,
+                agent_type="quality_checker",
+                prompt_tokens=response.usage.prompt_tokens if response.usage else 0,
+                completion_tokens=response.usage.completion_tokens if response.usage else 0,
+                response_time=response_time,
+                temperature=0.3,
+                max_tokens=Settings.MAX_TOKENS,
+                stream=False
             )
             
             validation_result = json.loads(response.choices[0].message.content)

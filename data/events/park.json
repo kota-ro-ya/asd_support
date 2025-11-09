@@ -10,18 +10,15 @@
       "choices": [
         {
           "text": "「終わったら貸してください」と言って待つ",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "順番を待つのは素晴らしいマナーです。言葉で伝えられましたね。"
+          "evaluation": "appropriate"
         },
         {
           "text": "他の遊具で遊ぶ",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "他の遊具で遊ぶのも良い選択です。でも、待つこともできますよ。"
+          "evaluation": "acceptable"
         },
         {
           "text": "無理やり奪う",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "奪うのは良くないです。順番を守りましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -32,18 +29,15 @@
       "choices": [
         {
           "text": "拾って持ち主に渡す",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "親切に渡せましたね。きっと喜ばれますよ。"
+          "evaluation": "appropriate"
         },
         {
           "text": "そのままにしておく",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "そのままでも良いですが、渡してあげるともっと良いですね。"
+          "evaluation": "acceptable"
         },
         {
           "text": "自分のものにする",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "他の人のものは持っていってはいけません。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -54,18 +48,15 @@
       "choices": [
         {
           "text": "「いいよ」と言って一緒に遊ぶ",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "一緒に遊べるのは素晴らしいです。楽しく過ごせそうですね。"
+          "evaluation": "appropriate"
         },
         {
           "text": "「今は一人で遊びたい」と伝える",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "自分の気持ちを正直に伝えられましたね。それも良い選択です。"
+          "evaluation": "appropriate"
         },
         {
           "text": "無視する",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "無視するのは良くないです。何か言葉で返事をしましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     }

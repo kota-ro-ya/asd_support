@@ -5,10 +5,12 @@ AI service for OpenAI API interactions.
 from openai import OpenAI
 from typing import Optional, Generator
 import logging
+import time
 
 from app.config.settings import Settings
 from app.config.prompts import AI_PERSONAS, get_feedback_system_prompt, GUIDE_SYSTEM_PROMPT
 from app.utils.error_handler import ErrorHandler
+from app.utils.debug_info import get_debug_collector
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +23,7 @@ class AIService:
         try:
             self.client = OpenAI(api_key=Settings.OPENAI_API_KEY)
             self.model = Settings.OPENAI_MODEL
+            self.debug_collector = get_debug_collector()
             logger.info("AIService initialized successfully")
         except Exception as e:
             logger.error(f"Failed to initialize AIService: {e}")
@@ -48,6 +51,9 @@ class AIService:
                 hint=hint
             )
             
+            # API呼び出しの計測開始
+            start_time = time.time()
+            
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
@@ -58,7 +64,55 @@ class AIService:
                 temperature=Settings.TEMPERATURE
             )
             
+            # デバッグ情報を記録
+            response_time = time.time() - start_time
+            self.debug_collector.add_api_call(
+                model=self.model,
+                agent_type="feedback_generator",
+                prompt_tokens=response.usage.prompt_tokens if response.usage else 0,
+                completion_tokens=response.usage.completion_tokens if response.usage else 0,
+                response_time=response_time,
+                temperature=Settings.TEMPERATURE,
+                max_tokens=Settings.MAX_TOKENS,
+                stream=False
+            )
+            
             feedback = response.choices[0].message.content
+            
+            # 生成されたフィードバックの品質を評価（品質チェックエージェント）
+            if Settings.DEBUG_MODE or Settings.DEBUG_LOG_ALWAYS:
+                try:
+                    from app.services.agent_coordinator import AgentCoordinator
+                    coordinator = AgentCoordinator()
+                    
+                    quality_result = coordinator.validate_content_quality(
+                        content_type="feedback",
+                        content={
+                            "feedback": feedback,
+                            "evaluation": evaluation,
+                            "choice": selected_choice
+                        },
+                        criteria={
+                            "clarity": "フィードバックが明確で理解しやすいか",
+                            "appropriateness": "評価に適した内容か",
+                            "educational_value": "教育的価値があるか"
+                        }
+                    )
+                    
+                    # 品質スコアを記録（0-100）
+                    self.debug_collector.add_evaluation(
+                        evaluation_type="feedback_quality",
+                        score=quality_result.get("score", 0),
+                        criteria="品質管理エージェントによる評価",
+                        details={
+                            "is_valid": quality_result.get("is_valid", True),
+                            "issues": quality_result.get("issues", []),
+                            "suggestions": quality_result.get("suggestions", []),
+                            "user_evaluation": evaluation
+                        }
+                    )
+                except Exception as e:
+                    logger.warning(f"Quality check failed: {e}")
             logger.info(f"Generated feedback for choice: {selected_choice}")
             return feedback
             

@@ -10,18 +10,15 @@
       "choices": [
         {
           "text": "「こんにちは」と言う",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "挨拶はとても良い行動です。お店の人も嬉しい気持ちになります。"
+          "evaluation": "appropriate"
         },
         {
           "text": "だまって座る",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "静かに待つのも悪くないですが、挨拶するともっと良いです。"
+          "evaluation": "acceptable"
         },
         {
           "text": "帰る",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "せっかく来たのに帰ってしまうのは残念です。髪を切るのが目的でしたね。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -32,18 +29,15 @@
       "choices": [
         {
           "text": "「ハサミの音がこわいです」とお店の人に伝える",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "自分の気持ちを伝えるのはとても良いことです。お店の人も優しく対応してくれます。"
+          "evaluation": "appropriate"
         },
         {
           "text": "耳をおさえる",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "耳をおさえるのも一つの方法です。でも、言葉で伝えられるともっと良いですね。"
+          "evaluation": "acceptable"
         },
         {
           "text": "大声を出す",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "大声を出すと周りの人がびっくりします。気持ちは分かるけど、言葉で伝えましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -54,18 +48,15 @@
       "choices": [
         {
           "text": "「ありがとうございました」と言う",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "お礼を言うのは素晴らしいです。感謝の気持ちを伝えられましたね。"
+          "evaluation": "appropriate"
         },
         {
           "text": "何も言わずに帰る",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "帰ることはできますが、お礼を言えるともっと良いですよ。"
+          "evaluation": "acceptable"
         },
         {
           "text": "「もっと切って」と言う",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "もう切り終わっています。次回、最初に希望を伝えましょうね。"
+          "evaluation": "inappropriate"
         }
       ]
     }

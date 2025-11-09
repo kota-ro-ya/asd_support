@@ -10,18 +10,15 @@
       "choices": [
         {
           "text": "「トイレに行きたい」と伝える",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "自分の気持ちを伝えるのはとても良いことです。我慢しないで言えましたね。"
+          "evaluation": "appropriate"
         },
         {
           "text": "我慢する",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "我慢するのは体に良くないです。トイレに行きたいときは伝えましょう。"
+          "evaluation": "inappropriate"
         },
         {
           "text": "黙ってトイレに行く",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "トイレに行くのは良いですが、一言伝えられるともっと良いですね。"
+          "evaluation": "acceptable"
         }
       ]
     },
@@ -32,18 +29,15 @@
       "choices": [
         {
           "text": "ノックして「使っていますか？」と聞く",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "ノックするのはとても良いマナーです。中の人も安心できます。"
+          "evaluation": "appropriate"
         },
         {
           "text": "待つ",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "待つのも良いですが、確認するともっと良いですよ。"
+          "evaluation": "acceptable"
         },
         {
           "text": "ドアを開ける",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "いきなり開けてはいけません。中に人がいるかもしれません。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -54,18 +48,72 @@
       "choices": [
         {
           "text": "手を洗う",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "手を洗うのはとても大切です。清潔にできましたね。"
+          "evaluation": "appropriate"
         },
         {
           "text": "手を洗わない",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "手を洗わないとバイ菌がついたままです。必ず洗いましょう。"
+          "evaluation": "inappropriate"
         },
         {
           "text": "水で軽く流すだけ",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "水だけでも良いですが、石鹸を使うともっと良いですよ。"
+          "evaluation": "acceptable"
+        }
+      ]
+    },
+    {
+      "scene_number": 3,
+      "text": "トイレの音やにおいが気になるね。どうする？",
+      "image": "assets/images/events/toilet/scene_04.png",
+      "choices": [
+        {
+          "text": "「音が嫌だ、臭い」と伝える",
+          "evaluation": "appropriate"
+        },
+        {
+          "text": "耳をふさぐ、鼻をつまむなどして、少し我慢してみる",
+          "evaluation": "acceptable"
+        },
+        {
+          "text": "我慢できずにトイレから出てしまう",
+          "evaluation": "inappropriate"
+        }
+      ]
+    },
+    {
+      "scene_number": 4,
+      "text": "手洗いや水流ボタンを触るのがちょっと怖いね、あるいは、何度も繰り返してしまうね。どうする？",
+      "image": "assets/images/events/toilet/scene_05.png",
+      "choices": [
+        {
+          "text": "「怖い」と伝える",
+          "evaluation": "appropriate"
+        },
+        {
+          "text": "ゆっくりと水流ボタンを押してみる",
+          "evaluation": "acceptable"
+        },
+        {
+          "text": "水流ボタンを何度も押す、あるいは、触らずにそのまま出てしまう",
+          "evaluation": "inappropriate"
+        }
+      ]
+    },
+    {
+      "scene_number": 5,
+      "text": "ハンドドライヤーの音が大きくて怖いね。あるいは、ハンドドライヤーがあるからトイレに入りたくないね。どうする？",
+      "image": "assets/images/events/toilet/scene_06.png",
+      "choices": [
+        {
+          "text": "ハンドドライヤーがない個室を探す、あるいは、「ハンドドライヤーが怖い」と伝える",
+          "evaluation": "appropriate"
+        },
+        {
+          "text": "少し離れてハンドドライヤーの音を聞いてみる",
+          "evaluation": "acceptable"
+        },
+        {
+          "text": "ハンドドライヤーがあるからトイレに行かない",
+          "evaluation": "inappropriate"
         }
       ]
     }

@@ -15,11 +15,27 @@ from app.components.feedback_display import display_feedback_stream
 from app.components.progress_bar import display_progress
 from app.components.stamp_display import display_mini_stamps
 from app.components.loading_animation import show_loading_with_animation
+from app.components.debug_panel import display_debug_panel
+from app.utils.debug_info import get_debug_collector
 import threading
 
 
 def render_story_mode():
     """ストーリーモード画面を描画"""
+    
+    # デバッグセッション開始（初回のみ）
+    debug_collector = get_debug_collector()
+    session_key = "debug_session_started_story_mode"
+    
+    if session_key not in st.session_state:
+        session_id = f"story_mode_{st.session_state.get('user_id', 'unknown')}_{id(st.session_state)}"
+        debug_collector.start_session(
+            session_id=session_id,
+            page="story_mode",
+            user_id=st.session_state.get("user_id"),
+            mode="story_mode"
+        )
+        st.session_state[session_key] = True
     
     # セッションから情報を取得
     event = SessionService.get_event()
@@ -31,6 +47,16 @@ def render_story_mode():
         SessionService.set_page(PAGE_NAMES["EVENT_SELECTION"])
         st.rerun()
         return
+    
+    # デバッグ情報を記録
+    debug_collector.add_reference(
+        data_type="event",
+        source=event.event_name,
+        description=f"Scene {current_scene_number}"
+    )
+    
+    # デバッグパネルを表示（サイドバー）
+    display_debug_panel(position="sidebar")
     
     # 現在のイベント進捗を取得
     event_progress = user.get_event_progress(event.event_name)
@@ -176,8 +202,12 @@ def render_story_mode():
         
         # AI生成シーンのキャッシュもクリア（次回は新しいシーンを生成）
         for key in list(st.session_state.keys()):
-            if key.startswith(f"ai_scene_{event.event_name}_"):
+            if key.startswith(f"ai_scene_{event.event_name}_") or key.startswith("debug_session_started_"):
                 del st.session_state[key]
+        
+        # デバッグセッションを終了
+        debug_collector = get_debug_collector()
+        debug_collector.end_session()
         
         SessionService.set_page(PAGE_NAMES["EVENT_SELECTION"])
         st.rerun()

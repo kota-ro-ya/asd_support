@@ -10,6 +10,10 @@ from pathlib import Path
 project_root = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(project_root))
 
+# ロギング設定を最初に初期化
+from app.utils.logger_config import setup_logging
+setup_logging()
+
 from app.services.session_service import SessionService
 from app.config.settings import Settings
 from app.config.constants import PAGE_NAMES

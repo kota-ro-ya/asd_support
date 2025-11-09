@@ -6,9 +6,12 @@ Specialized Agent Service - 専門性の高いマルチエージェントシス�
 
 from typing import Dict, List, Optional, Generator
 import logging
+import time
 from openai import OpenAI
 
 from app.config.settings import Settings
+from app.utils.debug_info import get_debug_collector
+from app.utils.token_counter import get_token_counter
 
 logger = logging.getLogger(__name__)
 
@@ -33,16 +36,16 @@ class SpecializedAgentService:
 - 感覚統合療法 - Ayres の感覚処理理論
 
 【回答の原則】
-1. エビデンスベース：必ず研究・理論に基づく情報を提供
-2. 個別性の尊重：「お子さんによって異なりますが」を前提に
-3. 段階的アプローチ：スモールステップを重視
-4. 保護者へのエンパワメント：責めずに寄り添う姿勢
+1. 状況適合性：その場面で最も効果的なアプローチを優先
+2. 簡潔性：長々と説明せず、要点を絞る
+3. 実用性：具体的で実践可能なアドバイス
+4. バランス：基本原則（事前予告、視覚支援、共感など）は必要に応じて言及するが、状況に応じて最適なものを選択
 
-【回答に必ず含めるべき要素】
-- 理論的根拠（「◯◯理論によると...」）
-- 具体的な手法（「具体的には...」）
-- 実践のステップ（「まず...次に...最後に...」）
-- 注意点（「ただし...」）
+【回答のポイント】
+- その状況で最も重要な対応方法を提示
+- ASD支援の基本原則（構造化、視覚支援、予測可能性、感覚配慮など）は、その場面で関連性が高い場合に言及
+- 全ての質問に対して同じパターンの回答を機械的に繰り返さない
+- 必要に応じて理論的根拠を簡潔に添える
 
 【引用すべき理論・研究】
 - Lovaas, O. I. (1987): ABAの効果
@@ -56,6 +59,11 @@ class SpecializedAgentService:
 - 一般論のみの回答（必ず具体的な手法を含める）
 - 保護者を責める表現（「あなたが悪い」など）
 - 安易な「大丈夫」「心配ない」
+
+【質問の範囲について】
+- ASD・発達障害と明らかに無関係な質問（一般的な料理レシピ、スポーツのルール、一般的な天気予報、政治的見解、ビジネス相談など）には、以下のお断りメッセージ**のみ**を返してください。お断り後に例示的な質問や追加の回答を一切含めないでください：
+  「申し訳ございませんが、その質問はASD支援の専門範囲を超えているため、お答えを控えさせていただきます。ASDのお子さんの支援や、保護者の方のお悩みに関することであれば、喜んでお答えいたします。」
+- ただし、一見無関係に見えても、ASDや発達支援と間接的に関連する可能性がある場合（例：感覚過敏と天候の関係、社会性と選挙への関心など）は、その関連性を簡潔に説明した上で回答を試みてください
 """
         },
         
@@ -75,16 +83,15 @@ class SpecializedAgentService:
 - 薬物療法の適応と限界
 
 【回答の原則】
-1. 医学的正確性：最新の医学知見に基づく
-2. リスク管理：安全性を最優先
-3. 専門医への橋渡し：必要に応じて専門医受診を推奨
-4. 科学的根拠：エビデンスレベルを明示（システマティックレビュー > RCT > 観察研究）
+1. 状況適合性：その場面に最も関連する医学的視点を提供
+2. 簡潔性：長々と説明せず、核心を伝える
+3. 実用性：保護者が理解しやすく、実践可能な説明
+4. 安全性：必要な場合のみ受診を推奨
 
-【回答に必ず含めるべき要素】
-- 医学的メカニズム（「医学的には...」）
-- エビデンスレベル（「◯◯研究では...」）
-- 受診の目安（「こんな場合は医師に相談を...」）
-- リスクや副作用（「注意点として...」）
+【回答のポイント】
+- その症状・行動の医学的メカニズムを、必要に応じて簡潔に説明
+- 感覚過敏、神経発達などの基本的な医学知識は、その場面で特に重要な場合に言及
+- 具体的な場面に即した実践的なアドバイス
 
 【引用すべき文献・ガイドライン】
 - DSM-5（米国精神医学会, 2013）
@@ -98,6 +105,11 @@ class SpecializedAgentService:
 - 具体的な薬の推奨（「◯◯を飲んでください」）※処方は医師のみ
 - 民間療法・代替医療の推奨（エビデンスなし）
 - 「様子を見ましょう」のみの回答（具体的な観察ポイントを示す）
+
+【質問の範囲について】
+- ASD・発達障害と明らかに無関係な質問（一般的な料理レシピ、スポーツのルール、一般的な天気予報、政治的見解、ビジネス相談など）には、以下のお断りメッセージ**のみ**を返してください。お断り後に例示的な質問や追加の回答を一切含めないでください：
+  「申し訳ございませんが、その質問はASD支援の専門範囲を超えているため、お答えを控えさせていただきます。ASDのお子さんの支援や、保護者の方のお悩みに関することであれば、喜んでお答えいたします。」
+- ただし、一見無関係に見えても、ASDや発達支援と間接的に関連する可能性がある場合は、その医学的関連性を簡潔に説明した上で回答を試みてください
 """
         },
         
@@ -117,16 +129,15 @@ class SpecializedAgentService:
 - 視覚支援ツール（絵カード、スケジュールボードなど）
 
 【回答の原則】
-1. 実践的：教室や家庭で今日から使える方法
-2. 現実的：現場のリソース（人・時間・予算）を考慮
-3. 協働的：教師と保護者の連携を重視
-4. エビデンスベース：文科省ガイドラインに準拠
+1. 状況適合性：その場面で最も効果的な支援方法を優先
+2. 実践的：今日から実行できる提案
+3. 簡潔性：長々と説明せず、要点を絞る
+4. 現実的：家庭で無理なくできる範囲
 
-【回答に必ず含めるべき要素】
-- 具体的な方法（「例えば...」）
-- 視覚支援の活用（「絵カードで...」）
-- 学校との連携方法（「先生に伝える際は...」）
-- 家庭でできること（「家でも...」）
+【回答のポイント】
+- その状況で特に有効な支援方法を提示
+- 視覚支援、構造化、合理的配慮などの基本ツールは、その場面で効果的な場合に提案
+- 全ての場面に同じ方法論を機械的に適用しない
 
 【引用すべき資料・制度】
 - 文部科学省「特別支援教育の推進について」（2007）
@@ -140,6 +151,11 @@ class SpecializedAgentService:
 - 理想論のみ（現場の制約を無視した提案）
 - 保護者に過度な負担を求める（「毎日学校に行って...」など）
 - 「特別支援学級に行けばいい」などの安易な提案
+
+【質問の範囲について】
+- ASD・発達障害と明らかに無関係な質問（一般的な料理レシピ、スポーツのルール、一般的な天気予報、政治的見解、ビジネス相談など）には、以下のお断りメッセージ**のみ**を返してください。お断り後に例示的な質問や追加の回答を一切含めないでください：
+  「申し訳ございませんが、その質問はASD支援の専門範囲を超えているため、お答えを控えさせていただきます。ASDのお子さんの支援や、保護者の方のお悩みに関することであれば、喜んでお答えいたします。」
+- ただし、一見無関係に見えても、ASDや発達支援と間接的に関連する可能性がある場合（例：学校行事、社会的イベントなど）は、その教育的関連性を簡潔に説明した上で回答を試みてください
 """
         },
         
@@ -159,16 +175,15 @@ class SpecializedAgentService:
 - レジリエンス（回復力）の強化
 
 【回答の原則】
-1. 家族全体を見る：ASD児だけでなく家族全員の幸せを考慮
-2. 保護者のセルフケア：「保護者が元気でいること」の重要性を強調
-3. レスパイトケア：休む権利と必要性
-4. きょうだい児への配慮：「見えない子ども」にならないように
+1. 状況適合性：その場面での家族の気持ちに寄り添う
+2. 簡潔性：長々と説明せず、心に響く言葉を
+3. 実用性：今できる具体的な対処法
+4. 共感：保護者の頑張りを認める
 
-【回答に必ず含めるべき要素】
-- 保護者の気持ちの受容（「大変でしたね」）
-- セルフケアの提案（「保護者も休息を...」）
-- きょうだいへの配慮（「他のお子さんも...」）
-- サポート資源の紹介（「こんな支援があります...」）
+【回答のポイント】
+- その場面での保護者の気持ちを理解し、共感を示す
+- セルフケア、きょうだい支援、レスパイトケアなどは、その状況で特に関連性が高い場合に言及
+- 全ての質問に対して同じパターンの回答を機械的に繰り返さない
 
 【引用すべき概念・プログラム】
 - ペアレント・トレーニング（行動療法ベース）
@@ -182,6 +197,11 @@ class SpecializedAgentService:
 - 保護者の感情を否定（「それは間違っています」）
 - 「頑張れ」の安易な使用（すでに頑張っている）
 - きょうだいを「我慢させるべき」という考え
+
+【質問の範囲について】
+- ASD・発達障害と明らかに無関係な質問（一般的な料理レシピ、スポーツのルール、一般的な天気予報、政治的見解、ビジネス相談など）には、以下のお断りメッセージ**のみ**を返してください。お断り後に例示的な質問や追加の回答を一切含めないでください：
+  「申し訳ございませんが、その質問はASD支援の専門範囲を超えているため、お答えを控えさせていただきます。ASDのお子さんの支援や、保護者の方のお悩みに関することであれば、喜んでお答えいたします。」
+- ただし、一見無関係に見えても、ASDや発達支援と間接的に関連する可能性がある場合（例：家族のストレス管理、保護者のメンタルヘルスなど）は、その関連性を簡潔に説明した上で回答を試みてください
 """
         }
     }
@@ -191,6 +211,7 @@ class SpecializedAgentService:
         try:
             self.client = OpenAI(api_key=Settings.OPENAI_API_KEY)
             self.model = Settings.OPENAI_MODEL
+            self.debug_collector = get_debug_collector()
             logger.info("SpecializedAgentService initialized")
         except Exception as e:
             logger.error(f"Failed to initialize SpecializedAgentService: {e}")
@@ -246,6 +267,9 @@ class SpecializedAgentService:
 ※他の専門家と意見が異なる可能性がある場合は、その旨を明記してください。
 """
             
+            # API呼び出しの計測開始
+            start_time = time.time()
+            
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
@@ -256,7 +280,57 @@ class SpecializedAgentService:
                 temperature=0.7
             )
             
-            return response.choices[0].message.content
+            # デバッグ情報を記録
+            response_time = time.time() - start_time
+            self.debug_collector.add_api_call(
+                model=self.model,
+                agent_type=f"expert_{agent_id}",
+                prompt_tokens=response.usage.prompt_tokens if response.usage else 0,
+                completion_tokens=response.usage.completion_tokens if response.usage else 0,
+                response_time=response_time,
+                temperature=0.7,
+                max_tokens=Settings.MAX_TOKENS * 3,
+                stream=False
+            )
+            
+            expert_response = response.choices[0].message.content
+            
+            # 専門家回答の品質を評価（品質チェックエージェント）
+            if Settings.DEBUG_MODE or Settings.DEBUG_LOG_ALWAYS:
+                try:
+                    from app.services.agent_coordinator import AgentCoordinator
+                    coordinator = AgentCoordinator()
+                    
+                    quality_result = coordinator.validate_content_quality(
+                        content_type="expert_response",
+                        content={
+                            "agent": agent['name'],
+                            "question": question,
+                            "response": expert_response
+                        },
+                        criteria={
+                            "expertise": "専門性が反映されているか",
+                            "clarity": "明確で理解しやすいか",
+                            "practical": "実践的なアドバイスが含まれているか",
+                            "empathy": "保護者に寄り添った内容か"
+                        }
+                    )
+                    
+                    # 品質スコアを記録（0-100）
+                    self.debug_collector.add_evaluation(
+                        evaluation_type=f"expert_quality_{agent_id}",
+                        score=quality_result.get("score", 0),
+                        criteria=f"{agent['name']}の回答品質評価",
+                        details={
+                            "is_valid": quality_result.get("is_valid", True),
+                            "issues": quality_result.get("issues", []),
+                            "suggestions": quality_result.get("suggestions", [])
+                        }
+                    )
+                except Exception as e:
+                    logger.warning(f"Quality check failed for {agent_id}: {e}")
+            
+            return expert_response
             
         except Exception as e:
             logger.error(f"Error generating expert response from {agent_id}: {e}")
@@ -400,6 +474,9 @@ class SpecializedAgentService:
 （励ましのメッセージ）
 """
             
+            # API呼び出しの計測開始
+            start_time = time.time()
+            
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
@@ -408,6 +485,19 @@ class SpecializedAgentService:
                 ],
                 max_tokens=Settings.MAX_TOKENS * 4,
                 temperature=0.7
+            )
+            
+            # デバッグ情報を記録
+            response_time = time.time() - start_time
+            self.debug_collector.add_api_call(
+                model=self.model,
+                agent_type="synthesizer",
+                prompt_tokens=response.usage.prompt_tokens if response.usage else 0,
+                completion_tokens=response.usage.completion_tokens if response.usage else 0,
+                response_time=response_time,
+                temperature=0.7,
+                max_tokens=Settings.MAX_TOKENS * 4,
+                stream=False
             )
             
             return response.choices[0].message.content
@@ -514,6 +604,9 @@ class SpecializedAgentService:
 専門用語を使う場合は、必ず分かりやすく説明してください。
 """
             
+            # API呼び出しの計測開始
+            start_time = time.time()
+            
             # ストリーミングで回答を生成
             stream = self.client.chat.completions.create(
                 model=self.model,
@@ -523,16 +616,118 @@ class SpecializedAgentService:
                 ],
                 max_tokens=Settings.MAX_TOKENS * 2,
                 temperature=0.8 if tone == "friendly" else 0.7,
-                stream=True
+                stream=True,
+                stream_options={"include_usage": True}  # 使用情報を含める
             )
             
-            for chunk in stream:
-                if chunk.choices[0].delta.content:
-                    yield chunk.choices[0].delta.content
+            usage_info = None
+            collected_response = []
+            try:
+                for chunk in stream:
+                    # choicesが空でないことを確認
+                    if chunk.choices and len(chunk.choices) > 0:
+                        if chunk.choices[0].delta.content:
+                            content = chunk.choices[0].delta.content
+                            collected_response.append(content)
+                            yield content
+                    # 最後のチャンクに使用情報が含まれる
+                    if hasattr(chunk, 'usage') and chunk.usage is not None:
+                        usage_info = chunk.usage
+            finally:
+                # Generatorが終了した後、またはエラーが発生した後に必ず実行
+                # finally内のエラーが外側のexceptに伝播しないようにする
+                try:
+                    response_time = time.time() - start_time
+                    full_response = "".join(collected_response)
                     
+                    # トークン数の取得または推定
+                    try:
+                        if usage_info:
+                            prompt_tokens = usage_info.prompt_tokens
+                            completion_tokens = usage_info.completion_tokens
+                            logger.info(f"Usage info received: prompt={prompt_tokens}, completion={completion_tokens}")
+                        else:
+                            # APIからusage情報が取得できない場合、tiktokenで推定
+                            logger.warning("No usage info from API, estimating with tiktoken")
+                            token_counter = get_token_counter(self.model)
+                            estimated = token_counter.estimate_streaming_tokens(
+                                prompt=user_message,
+                                response=full_response,
+                                system_prompt=agent['system_prompt']
+                            )
+                            prompt_tokens = estimated['prompt_tokens']
+                            completion_tokens = estimated['completion_tokens']
+                    except Exception as e:
+                        logger.error(f"Token estimation failed: {e}", exc_info=True)
+                        # フォールバック：概算値を使用
+                        prompt_tokens = len(user_message) // 4
+                        completion_tokens = len(full_response) // 4
+                    
+                    if self.debug_collector:
+                        self.debug_collector.add_api_call(
+                            model=self.model,
+                            agent_type=f"expert_stream_{agent_id}",
+                            prompt_tokens=prompt_tokens,
+                            completion_tokens=completion_tokens,
+                            response_time=response_time,
+                            temperature=0.8 if tone == "friendly" else 0.7,
+                            max_tokens=Settings.MAX_TOKENS * 2,
+                            stream=True
+                        )
+                    
+                    # 品質評価（常に実行して安全性を確保）
+                    if full_response and self.debug_collector:
+                        try:
+                            from app.services.agent_coordinator import AgentCoordinator
+                            coordinator = AgentCoordinator()
+                            
+                            quality_result = coordinator.validate_content_quality(
+                                content_type="expert_response",
+                                content={
+                                    "agent": agent['name'],
+                                    "question": question,
+                                    "response": full_response
+                                },
+                                criteria={
+                                    "expertise": "専門性が反映されているか",
+                                    "clarity": "明確で理解しやすいか",
+                                    "practical": "実践的なアドバイスが含まれているか",
+                                    "empathy": "保護者に寄り添った内容か",
+                                    "safety": "倫理的に適切で安全な内容か"
+                                }
+                            )
+                            
+                            # 品質スコアを記録（0-100）
+                            self.debug_collector.add_evaluation(
+                                evaluation_type=f"expert_quality_{agent_id}",
+                                score=quality_result.get("score", 0),
+                                criteria=f"{agent['name']}の回答品質評価",
+                                details={
+                                    "is_valid": quality_result.get("is_valid", True),
+                                    "issues": quality_result.get("issues", []),
+                                    "suggestions": quality_result.get("suggestions", [])
+                                }
+                            )
+                            
+                            # 低スコアまたは無効な回答の場合、警告をログに記録
+                            if not quality_result.get("is_valid", True) or quality_result.get("score", 100) < 60:
+                                logger.warning(
+                                    f"Low quality response detected: "
+                                    f"score={quality_result.get('score', 0)}, "
+                                    f"is_valid={quality_result.get('is_valid', True)}, "
+                                    f"issues={quality_result.get('issues', [])}"
+                                )
+                        except Exception as eval_error:
+                            logger.error(f"Quality check failed for {agent_id}: {eval_error}", exc_info=True)
+                
+                except Exception as finally_error:
+                    logger.error(f"Error in finally block: {finally_error}", exc_info=True)
+                
         except Exception as e:
-            logger.error(f"Error in generate_single_expert_response_stream: {e}")
-            yield "申し訳ございません。回答の生成に失敗しました。"
+            import traceback
+            error_details = traceback.format_exc()
+            logger.error(f"Error in generate_single_expert_response_stream: {e}\n{error_details}")
+            yield f"\n\n[DEBUG] エラーが発生しました: {str(e)}\n詳細はログを確認してください。"
     
     def generate_quick_response_stream(
         self,
@@ -585,6 +780,11 @@ class SpecializedAgentService:
 - 専門用語の乱用（必ず説明を付ける）
 - 保護者を責める表現
 - 悲観的な表現
+
+【質問の範囲について】
+- ASD・発達障害と明らかに無関係な質問（一般的な料理レシピ、スポーツのルール、一般的な天気予報、政治的見解、ビジネス相談など）には、以下のお断りメッセージ**のみ**を返してください。お断り後に例示的な質問や追加の回答を一切含めないでください：
+  「申し訳ございませんが、その質問はASD支援の専門範囲を超えているため、お答えを控えさせていただきます。ASDのお子さんの支援や、保護者の方のお悩みに関することであれば、喜んでお答えいたします。」
+- ただし、一見無関係に見えても、ASDや発達支援と間接的に関連する可能性がある場合は、その関連性を簡潔に説明した上で回答を試みてください
 """
             else:  # standard
                 system_prompt = """
@@ -607,6 +807,11 @@ class SpecializedAgentService:
 2. 専門的見解
 3. 具体的な方法
 4. 注意点と参考情報
+
+【質問の範囲について】
+- ASD・発達障害と明らかに無関係な質問（一般的な料理レシピ、スポーツのルール、一般的な天気予報、政治的見解、ビジネス相談など）には、以下のお断りメッセージ**のみ**を返してください。お断り後に例示的な質問や追加の回答を一切含めないでください：
+  「申し訳ございませんが、その質問はASD支援の専門範囲を超えているため、お答えを控えさせていただきます。ASDのお子さんの支援や、保護者の方のお悩みに関することであれば、喜んでお答えいたします。」
+- ただし、一見無関係に見えても、ASDや発達支援と間接的に関連する可能性がある場合は、その関連性を簡潔に説明した上で回答を試みてください
 """
             
             user_message = f"""
@@ -620,6 +825,9 @@ class SpecializedAgentService:
 簡潔かつ分かりやすく、実践的なアドバイスをお願いします。
 """
             
+            # API呼び出しの計測開始
+            start_time = time.time()
+            
             # ストリーミングで回答を生成
             stream = self.client.chat.completions.create(
                 model=self.model,
@@ -629,16 +837,69 @@ class SpecializedAgentService:
                 ],
                 max_tokens=Settings.MAX_TOKENS * 2,
                 temperature=0.8 if tone == "friendly" else 0.7,
-                stream=True
+                stream=True,
+                stream_options={"include_usage": True}  # 使用情報を含める
             )
             
-            for chunk in stream:
-                if chunk.choices[0].delta.content:
-                    yield chunk.choices[0].delta.content
+            usage_info = None
+            collected_response = []
+            try:
+                for chunk in stream:
+                    # choicesが空でないことを確認
+                    if chunk.choices and len(chunk.choices) > 0:
+                        if chunk.choices[0].delta.content:
+                            content = chunk.choices[0].delta.content
+                            collected_response.append(content)
+                            yield content
+                    # 最後のチャンクに使用情報が含まれる
+                    if hasattr(chunk, 'usage') and chunk.usage is not None:
+                        usage_info = chunk.usage
+            finally:
+                # Generatorが終了した後、またはエラーが発生した後に必ず実行
+                # finally内のエラーが外側のexceptに伝播しないようにする
+                try:
+                    response_time = time.time() - start_time
+                    full_response = "".join(collected_response)
+                    
+                    # トークン数の取得または推定
+                    try:
+                        if usage_info:
+                            prompt_tokens = usage_info.prompt_tokens
+                            completion_tokens = usage_info.completion_tokens
+                        else:
+                            # APIからusage情報が取得できない場合、tiktokenで推定
+                            token_counter = get_token_counter(self.model)
+                            estimated = token_counter.estimate_streaming_tokens(
+                                prompt=user_message,
+                                response=full_response,
+                                system_prompt=system_prompt
+                            )
+                            prompt_tokens = estimated['prompt_tokens']
+                            completion_tokens = estimated['completion_tokens']
+                    except Exception as e:
+                        logger.error(f"Token estimation failed: {e}", exc_info=True)
+                        prompt_tokens = len(user_message) // 4
+                        completion_tokens = len(full_response) // 4
+                    
+                    if self.debug_collector:
+                        self.debug_collector.add_api_call(
+                            model=self.model,
+                            agent_type="quick_response",
+                            prompt_tokens=prompt_tokens,
+                            completion_tokens=completion_tokens,
+                            response_time=response_time,
+                            temperature=0.8 if tone == "friendly" else 0.7,
+                            max_tokens=Settings.MAX_TOKENS * 2,
+                            stream=True
+                        )
+                except Exception as finally_error:
+                    logger.error(f"Error in finally block (quick_response): {finally_error}", exc_info=True)
                     
         except Exception as e:
-            logger.error(f"Error in generate_quick_response_stream: {e}")
-            yield "申し訳ございません。回答の生成に失敗しました。"
+            import traceback
+            error_details = traceback.format_exc()
+            logger.error(f"Error in generate_quick_response_stream: {e}\n{error_details}")
+            yield f"\n\n[DEBUG] エラーが発生しました: {str(e)}\n詳細はログを確認してください。"
     
     def generate_comprehensive_response_stream(
         self,
@@ -717,6 +978,9 @@ class SpecializedAgentService:
 4. 励まし：保護者を支援する姿勢
 """
             
+            # API呼び出しの計測開始
+            synthesis_start_time = time.time()
+            
             # ストリーミングで統合回答を生成
             stream = self.client.chat.completions.create(
                 model=self.model,
@@ -726,16 +990,69 @@ class SpecializedAgentService:
                 ],
                 max_tokens=Settings.MAX_TOKENS * 4,
                 temperature=0.8 if tone == "friendly" else 0.7,
-                stream=True
+                stream=True,
+                stream_options={"include_usage": True}  # 使用情報を含める
             )
             
-            for chunk in stream:
-                if chunk.choices[0].delta.content:
-                    yield chunk.choices[0].delta.content
+            usage_info = None
+            collected_response = []
+            try:
+                for chunk in stream:
+                    # choicesが空でないことを確認
+                    if chunk.choices and len(chunk.choices) > 0:
+                        if chunk.choices[0].delta.content:
+                            content = chunk.choices[0].delta.content
+                            collected_response.append(content)
+                            yield content
+                    # 最後のチャンクに使用情報が含まれる
+                    if hasattr(chunk, 'usage') and chunk.usage is not None:
+                        usage_info = chunk.usage
+            finally:
+                # Generatorが終了した後、またはエラーが発生した後に必ず実行
+                # finally内のエラーが外側のexceptに伝播しないようにする
+                try:
+                    response_time = time.time() - synthesis_start_time
+                    full_response = "".join(collected_response)
+                    
+                    # トークン数の取得または推定
+                    try:
+                        if usage_info:
+                            prompt_tokens = usage_info.prompt_tokens
+                            completion_tokens = usage_info.completion_tokens
+                        else:
+                            # APIからusage情報が取得できない場合、tiktokenで推定
+                            token_counter = get_token_counter(self.model)
+                            estimated = token_counter.estimate_streaming_tokens(
+                                prompt=synthesis_prompt,
+                                response=full_response,
+                                system_prompt="あなたは複数の専門家の意見を統合する優秀なコーディネーターです。"
+                            )
+                            prompt_tokens = estimated['prompt_tokens']
+                            completion_tokens = estimated['completion_tokens']
+                    except Exception as e:
+                        logger.error(f"Token estimation failed: {e}", exc_info=True)
+                        prompt_tokens = len(synthesis_prompt) // 4
+                        completion_tokens = len(full_response) // 4
+                    
+                    if self.debug_collector:
+                        self.debug_collector.add_api_call(
+                            model=self.model,
+                            agent_type="comprehensive_synthesis",
+                            prompt_tokens=prompt_tokens,
+                            completion_tokens=completion_tokens,
+                            response_time=response_time,
+                            temperature=0.8 if tone == "friendly" else 0.7,
+                            max_tokens=Settings.MAX_TOKENS * 4,
+                            stream=True
+                        )
+                except Exception as finally_error:
+                    logger.error(f"Error in finally block (comprehensive): {finally_error}", exc_info=True)
                     
         except Exception as e:
-            logger.error(f"Error in generate_comprehensive_response_stream: {e}")
-            yield "申し訳ございません。回答の生成に失敗しました。"
+            import traceback
+            error_details = traceback.format_exc()
+            logger.error(f"Error in generate_comprehensive_response_stream: {e}\n{error_details}")
+            yield f"\n\n[DEBUG] エラーが発生しました: {str(e)}\n詳細はログを確認してください。"
     
     def generate_sequential_expert_responses_stream(
         self,
@@ -801,6 +1118,9 @@ class SpecializedAgentService:
 専門用語は使っても構いませんが、必ず分かりやすく説明してください。
 """
                 
+                # API呼び出しの計測開始
+                start_time = time.time()
+                
                 # ストリーミングで回答を生成
                 stream = self.client.chat.completions.create(
                     model=self.model,
@@ -810,17 +1130,66 @@ class SpecializedAgentService:
                     ],
                     max_tokens=Settings.MAX_TOKENS * 2,
                     temperature=0.8 if tone == "friendly" else 0.7,
-                    stream=True
+                    stream=True,
+                    stream_options={"include_usage": True}  # 使用情報を含める
                 )
                 
-                for chunk in stream:
-                    if chunk.choices[0].delta.content:
-                        yield {
-                            "agent_id": agent_id,
-                            "agent_name": agent['name'],
-                            "agent_icon": agent['icon'],
-                            "chunk": chunk.choices[0].delta.content
-                        }
+                usage_info = None
+                collected_response = []
+                try:
+                    for chunk in stream:
+                        if chunk.choices[0].delta.content:
+                            content = chunk.choices[0].delta.content
+                            collected_response.append(content)
+                            yield {
+                                "agent_id": agent_id,
+                                "agent_name": agent['name'],
+                                "agent_icon": agent['icon'],
+                                "chunk": content
+                            }
+                        # 最後のチャンクに使用情報が含まれる
+                        if hasattr(chunk, 'usage') and chunk.usage is not None:
+                            usage_info = chunk.usage
+                finally:
+                    # Generatorが終了した後、またはエラーが発生した後に必ず実行
+                    # finally内のエラーが外側のexceptに伝播しないようにする
+                    try:
+                        response_time = time.time() - start_time
+                        full_response = "".join(collected_response)
+                        
+                        # トークン数の取得または推定
+                        try:
+                            if usage_info:
+                                prompt_tokens = usage_info.prompt_tokens
+                                completion_tokens = usage_info.completion_tokens
+                            else:
+                                # APIからusage情報が取得できない場合、tiktokenで推定
+                                token_counter = get_token_counter(self.model)
+                                estimated = token_counter.estimate_streaming_tokens(
+                                    prompt=user_message,
+                                    response=full_response,
+                                    system_prompt=agent['system_prompt']
+                                )
+                                prompt_tokens = estimated['prompt_tokens']
+                                completion_tokens = estimated['completion_tokens']
+                        except Exception as e:
+                            logger.error(f"Token estimation failed: {e}", exc_info=True)
+                            prompt_tokens = len(user_message) // 4
+                            completion_tokens = len(full_response) // 4
+                        
+                        if self.debug_collector:
+                            self.debug_collector.add_api_call(
+                                model=self.model,
+                                agent_type=f"sequential_{agent_id}",
+                                prompt_tokens=prompt_tokens,
+                                completion_tokens=completion_tokens,
+                                response_time=response_time,
+                                temperature=0.8 if tone == "friendly" else 0.7,
+                                max_tokens=Settings.MAX_TOKENS * 2,
+                                stream=True
+                            )
+                    except Exception as finally_error:
+                        logger.error(f"Error in finally block (sequential_{agent_id}): {finally_error}", exc_info=True)
                 
                 # 終了マーカー
                 yield {

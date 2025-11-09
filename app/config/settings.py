@@ -27,7 +27,8 @@ class Settings:
     # App settings
     APP_TITLE = os.getenv("APP_TITLE", "ASD支援アプリ")
     APP_VERSION = os.getenv("APP_VERSION", "0.5")
-    DEBUG_MODE = os.getenv("DEBUG_MODE", "False").lower() == "true"
+    DEBUG_MODE = os.getenv("DEBUG_MODE", "True").lower() == "true"  # デフォルトで有効化
+    DEBUG_LOG_ALWAYS = os.getenv("DEBUG_LOG_ALWAYS", "True").lower() == "true"  # ログは常に記録（UI表示はDEBUG_MODEで制御）
     
     # AI response settings
     MAX_TOKENS = 500

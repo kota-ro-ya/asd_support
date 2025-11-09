@@ -10,18 +10,15 @@
       "choices": [
         {
           "text": "「おはよう」と言う",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "朝の挨拶ができましたね。気持ちの良いスタートです。"
+          "evaluation": "appropriate"
         },
         {
           "text": "何も言わずに起きる",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "起きられましたが、挨拶するともっと良いですよ。"
+          "evaluation": "acceptable"
         },
         {
           "text": "もう一度寝る",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "もう起きる時間です。頑張って起きましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -32,18 +29,15 @@
       "choices": [
         {
           "text": "石鹸を使って丁寧に洗う",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "しっかり顔を洗えましたね。さっぱりしたでしょう。"
+          "evaluation": "appropriate"
         },
         {
           "text": "水だけで洗う",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "水だけでも良いですが、石鹸を使うともっと良いですよ。"
+          "evaluation": "acceptable"
         },
         {
           "text": "洗わない",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "顔を洗わないと清潔じゃないです。必ず洗いましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     },
@@ -54,18 +48,15 @@
       "choices": [
         {
           "text": "自分で服を選んで着る",
-          "evaluation": "appropriate",
-          "ai_feedback_hint": "自分で着替えられましたね。素晴らしいです。"
+          "evaluation": "appropriate"
         },
         {
           "text": "手伝ってもらいながら着る",
-          "evaluation": "acceptable",
-          "ai_feedback_hint": "手伝ってもらうのも良いですが、少しずつ自分でできるようになりましょう。"
+          "evaluation": "acceptable"
         },
         {
           "text": "着替えない",
-          "evaluation": "inappropriate",
-          "ai_feedback_hint": "パジャマのままでは出かけられません。着替えましょう。"
+          "evaluation": "inappropriate"
         }
       ]
     }
